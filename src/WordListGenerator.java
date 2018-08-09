@@ -1,13 +1,9 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 public class WordListGenerator {
 
-    public List<String> getWordList(int wordLength)
+    public ArrayList<String> getWordList(int wordLength)
     {   ArrayList<String> words = new ArrayList<>();
         File file = new File("./src/sowpods.txt");
         BufferedReader br;
@@ -23,5 +19,12 @@ public class WordListGenerator {
             e.printStackTrace();
         }
         return words;
+    }
+    public static void main(String[] args)
+    {
+        System.out.println("GUESS THE WORD\nWhat difficulty will you play?\n1. Easy\n2. Medium \n3. Hard\n");
+        Scanner sc=new Scanner(System.in);
+        int userInput = sc.nextInt();
+        userInput += 3;
     }
 }
