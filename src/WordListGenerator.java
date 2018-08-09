@@ -24,9 +24,4 @@ public class WordListGenerator {
         }
         return words;
     }
-    public static void main(String args[])
-    {
-        WordListGenerator wlg = new WordListGenerator();
-        System.out.println(wlg.getWordList(4));
-    }
 }
