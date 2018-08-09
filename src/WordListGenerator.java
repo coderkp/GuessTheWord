@@ -11,10 +11,33 @@ public class WordListGenerator {
         secretWord = validWords.get(rand.nextInt(validWords.size()));
     }
 
+    static int getVarianceScore(String currentWord){
+        int countArray[]= new int [10];
+        for(int x=0;x<validWords.size();x++){
+            countArray[distinctCharCount(currentWord,validWords.get(x))+1]++;
+        }
+        int score = 0;
+        for(int x=0;x<10;x++){
+            score+=(countArray[x]*countArray[x]);
+        }
+        return score;
+    }
+
 
     static String getNextWord(){
-        return validWords.get(0);
+        int minVarianceScore=Integer.MAX_VALUE;
+        String selectedWord="";
+        for(int x=0;x<validWords.size();x++){
+            int currentVarianceScore=getVarianceScore(validWords.get(x));
+            if(currentVarianceScore<minVarianceScore){
+                minVarianceScore=currentVarianceScore;
+                selectedWord=validWords.get(x);
+            }
+        }
+        return selectedWord;
     }
+
+
 
     static void removeInvalidWords(String word,int matchedCharacter){
         ArrayList<String> InvalidWords= new ArrayList<String>();
@@ -55,24 +78,18 @@ public class WordListGenerator {
             br = new BufferedReader(new FileReader(file));
             String st;
             while ((st = br.readLine()) != null) {
-               if(st.length()!=wordLength)
-                   continue;
-               words.add(st);
+                if(st.length()!=wordLength)
+                    continue;
+                words.add(st);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
         return words;
     }
-    public static void main(String[] args)
-    {
-        System.out.println("GUESS THE WORD\nWhat difficulty will you play?\n1. Easy\n2. Medium \n3. Hard\n");
-        Scanner sc=new Scanner(System.in);
-        int userInput = sc.nextInt();
-        WordListGenerator wordlistgenerator = new WordListGenerator();
-        validWords= wordlistgenerator.getWordList(userInput+3);
-        setSecretWord();
+    public static void playGame(){
         boolean hasSomeoneWon = false;
+        Scanner sc=new Scanner(System.in);
         while(!hasSomeoneWon){
             String nextWord = getNextWord();
             System.out.println("My guess is: " + nextWord);
@@ -101,4 +118,19 @@ public class WordListGenerator {
 
         }
     }
+    public static void gameRunner()
+    {
+        System.out.println("GUESS THE WORD\nWhat difficulty will you play?\n1. Easy\n2. Medium \n3. Hard\n");
+        Scanner sc=new Scanner(System.in);
+        int userInput = sc.nextInt();
+        WordListGenerator wordlistgenerator = new WordListGenerator();
+        validWords= wordlistgenerator.getWordList(userInput+3);
+        setSecretWord();
+        playGame();
+    }
+    public static void main(String[] args)
+    {
+        gameRunner();
+    }
 }
+
