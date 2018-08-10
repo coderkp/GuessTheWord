@@ -23,7 +23,6 @@ public class WordListGenerator {
         return score;
     }
 
-
     static String getNextWord(){
         int minVarianceScore=Integer.MAX_VALUE;
         String selectedWord="";
@@ -37,8 +36,6 @@ public class WordListGenerator {
         return selectedWord;
     }
 
-
-
     static void removeInvalidWords(String word,int matchedCharacter){
         ArrayList<String> InvalidWords= new ArrayList<String>();
         for(int x=0;x<validWords.size();x++){
@@ -46,6 +43,7 @@ public class WordListGenerator {
                 InvalidWords.add(validWords.get(x));
             }
         }
+        System.out.println("Size of Dictionary: " + validWords.size());
         validWords.removeAll(InvalidWords);
         validWords.remove(word);
     }
@@ -72,7 +70,7 @@ public class WordListGenerator {
 
     public ArrayList<String> getWordList(int wordLength)
     {   ArrayList<String> words = new ArrayList<>();
-        File file = new File("./src/sowpods.txt");
+        File file = new File("./src/sowpod.txt");
         BufferedReader br;
         try {
             br = new BufferedReader(new FileReader(file));
@@ -85,6 +83,7 @@ public class WordListGenerator {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        //System.out.println(words);
         return words;
     }
     public static void playGame(){
@@ -107,7 +106,6 @@ public class WordListGenerator {
             System.out.println("Your Turn. Guess my secret word");
             String userGuess = sc.nextLine();
             userGuess = sc.nextLine();
-            //System.out.println(userGuess);
             int userSimilarityCount = distinctCharCount(secretWord, userGuess);
             if(userSimilarityCount == -1){
                 hasSomeoneWon = true;
@@ -134,3 +132,31 @@ public class WordListGenerator {
     }
 }
 
+/*File file = new File("./src/sowpods.txt");
+        BufferedReader br;
+
+        try {
+            FileWriter fw = new FileWriter("./src/sowpod.txt");
+            br = new BufferedReader(new FileReader(file));
+            String st;
+            while ((st = br.readLine()) != null) {
+                if (st.length() == 4 || st.length() == 5 || st.length() == 6) {    //fw.write(st + "\n");
+                    int alpha[] = new int[26];
+                    boolean skipword = false;
+                    for (int j = 0; j < st.length(); j++) {
+                        if (alpha[st.charAt(j) - 65] == 0)
+                            alpha[st.charAt(j) - 65] = 1;
+                        else {
+                            skipword = true;
+                            break;
+                        }
+                    }
+                    if (!skipword)
+                        fw.write(st + "\n");
+                }
+            }
+            fw.flush();
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
